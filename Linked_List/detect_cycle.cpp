@@ -1,4 +1,27 @@
 /**
+ * Intuition:
+ *
+ * To detect a cycle in a linked list, we use Floyd's Cycle Detection Algorithm.
+ * It uses two pointers: slow and fast.
+ *
+ * slow moves 1 step at a time.
+ * fast moves 2 steps at a time.
+ *
+ * If there is a cycle, fast will eventually meet slow inside the cycle.
+ * If there is no cycle, fast will reach NULL.
+ *
+ * Example:
+ * 1 -> 2 -> 3 -> 4 -> 5
+ *           ^         |
+ *           |_________|
+ *
+ * Here, slow and fast will eventually meet, so cycle exists.
+ *
+ * Time Complexity: O(n)
+ * Space Complexity: O(1)
+ */
+
+/**
  * Definition for singly-linked list.
  * struct ListNode {
  *     int val;
@@ -17,21 +40,21 @@ public:
         // fast pointer moves two steps at a time
         ListNode* fast = head;
 
-        // continue until fast reaches NULL
-        // if fast or fast->next becomes NULL, there is no cycle
+        // Continue until fast reaches NULL
+        // If fast or fast->next becomes NULL, there is no cycle
         while (fast != NULL && fast->next != NULL) {
 
-            // move slow pointer by one node
+            // Move slow pointer by one node
             slow = slow->next;
 
-            // move fast pointer by two nodes
+            // Move fast pointer by two nodes
             fast = fast->next->next;
 
-            // if slow and fast meet, cycle exists
+            // If slow and fast meet, cycle exists
             if (slow == fast) return true;
         }
 
-        // if loop ends, fast reached NULL, so no cycle
+        // If loop ends, fast reached NULL, so no cycle
         return false;
     }
 };
