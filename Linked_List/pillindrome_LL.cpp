@@ -1,4 +1,35 @@
 /**
+ * Intuition:
+ * To check whether a linked list is palindrome or not,
+ * we compare the first half with the reversed second half.
+ *
+ * Steps:
+ * 1. Find the middle of the linked list using slow and fast pointers.
+ * 2. Reverse the second half of the linked list.
+ * 3. Compare nodes from the first half and reversed second half one by one.
+ * 4. If all values match, the linked list is palindrome.
+ *
+ * Example:
+ * Original list:
+ * 1 -> 2 -> 3 -> 2 -> 1
+ *
+ * First half:
+ * 1 -> 2 -> 3
+ *
+ * Second half:
+ * 2 -> 1
+ *
+ * Reverse second half:
+ * 1 -> 2
+ *
+ * Compare:
+ * 1 with 1
+ * 2 with 2
+ *
+ * Since all matched, it is palindrome.
+ */
+
+/**
  * Definition for singly-linked list.
  * struct ListNode {
  *     int val;
@@ -11,56 +42,70 @@
 class Solution {
 public:
 
+    // Function to reverse a linked list
+    ListNode* reverseList(ListNode* head) {
 
+        // prev will store the previous node
+        ListNode* prev = NULL;
 
- ListNode* reverseList(ListNode* head) {
-
-        ListNode * prev =NULL;
-        ListNode * temp =head;
+        // temp is used to traverse the list
+        ListNode* temp = head;
         
-        while(temp){
+        while(temp) {
 
-            ListNode* front =temp->next;
+            // Store next node before breaking the link
+            ListNode* front = temp->next;
 
-            temp->next=prev;
-            prev=temp;
-            temp=front;
-            
+            // Reverse the current node's link
+            temp->next = prev;
+
+            // Move prev forward
+            prev = temp;
+
+            // Move temp forward
+            temp = front;
         }
+
+        // prev becomes the new head after reversing
         return prev; 
-        
     }
-
-
-
 
     bool isPalindrome(ListNode* head) {
 
-        if(head==NULL || head->next==NULL) return true;
+        // Empty list or single node list is always palindrome
+        if(head == NULL || head->next == NULL) return true;
 
-        ListNode* slow=head;
-        ListNode* fast=head;
+        ListNode* slow = head;
+        ListNode* fast = head;
 
-        while(fast->next!=NULL && fast->next->next!=NULL){
-            slow=slow->next;
-            fast=fast->next->next;
-
-            
+        // Find the middle node
+        // slow will stop at the end of first half
+        while(fast->next != NULL && fast->next->next != NULL) {
+            slow = slow->next;
+            fast = fast->next->next;
         }
 
-        ListNode* newnode=reverseList(slow->next);
+        // Reverse the second half of the linked list
+        ListNode* newnode = reverseList(slow->next);
 
-        ListNode* first=head;
-        ListNode* second =newnode;  
+        // first starts from beginning of list
+        ListNode* first = head;
 
-        while(second!=NULL){
+        // second starts from reversed second half
+        ListNode* second = newnode;  
 
-            if(first->val!=second->val) return false;
-            first=first->next;
-            second=second->next;
+        // Compare first half and reversed second half
+        while(second != NULL) {
 
+            // If values are different, list is not palindrome
+            if(first->val != second->val) return false;
+
+            // Move both pointers forward
+            first = first->next;
+            second = second->next;
         } 
-return true;
-        
+
+        // If all values matched, list is palindrome
+        return true;
     }
 };

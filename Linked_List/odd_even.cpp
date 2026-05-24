@@ -1,4 +1,35 @@
 /**
+ * Intuition:
+ * We have to group nodes by their position, not by their value.
+ *
+ * Odd-position nodes should come first:
+ * 1st, 3rd, 5th, ...
+ *
+ * Even-position nodes should come after them:
+ * 2nd, 4th, 6th, ...
+ *
+ * So we maintain two separate chains:
+ * 1. Odd list using pointer to
+ * 2. Even list using pointer te
+ *
+ * While traversing, we connect odd nodes together and even nodes together.
+ * At the end, we attach the even list after the odd list.
+ *
+ * Example:
+ * Original:
+ * 1 -> 2 -> 3 -> 4 -> 5
+ *
+ * Odd-position list:
+ * 1 -> 3 -> 5
+ *
+ * Even-position list:
+ * 2 -> 4
+ *
+ * Final:
+ * 1 -> 3 -> 5 -> 2 -> 4
+ */
+
+/**
  * Definition for singly-linked list.
  * struct ListNode {
  *     int val;
