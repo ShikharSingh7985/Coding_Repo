@@ -1,5 +1,6 @@
 /*
 Intuition:
+leetcode 1358
 
 We need to count substrings that contain at least one 'a',
 at least one 'b', and at least one 'c'.
